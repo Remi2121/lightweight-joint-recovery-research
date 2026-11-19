@@ -24,7 +24,11 @@ Can missing-joint recovery be made **compute-selective** — spending extra comp
 
 ## Relation to the Main Framework
 
-This module is one of two original research contributions in the team's main framework (the other being adaptive multi-person batching). It plugs into the main pipeline between pose estimation/tracking and action recognition — see the [main repo's architecture diagram](https://github.com/Remi2121/FYP-lightweight-multiperson-action-recognition#framework-architecture) for where it fits.
+This module is one of two original research contributions in the team's main framework (the other being adaptive multi-person batching). It plugs into the main pipeline right after person tracking & joint alignment, before per-person action recognition:
+
+![Proposed bottom-up, multi-person activity recognition and localization pipeline](docs/images/framework_pipeline.jpg)
+
+*Fig. 1 — Full framework pipeline (from the main [lightweight-multiperson-action-recognition](https://github.com/Remi2121/FYP-lightweight-multiperson-action-recognition) repo). Missing-joint recovery operates within the "Person Tracking & Joint Alignment" stage, before each person's skeleton reaches action recognition.*
 
 ## Key Reference
 
