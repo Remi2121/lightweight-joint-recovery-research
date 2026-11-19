@@ -34,6 +34,47 @@ This module is one of two original research contributions in the team's main fra
 
 X. Li, Q. Geng, Q. Huang, X. Li, J. Tang, and Q. Ye, "Spatial-temporal self-compensating graph convolutional network for skeleton-based action recognition under data constraints," *IEEE Transactions on Image Processing*, vol. 35, pp. 5818–5833, 2026.
 
+## Project Structure
+
+```
+src/
+  datasets/pku_mmd.py       -- loads PKU-MMD skeleton + label files into fixed-length clips
+  models/graph.py           -- 25-joint Kinect/NTU skeleton graph, spatial configuration partitioning
+  models/st_gcn.py          -- ST-GCN baseline backbone (9 layers, edge-importance weighting)
+  occlusion.py               -- synthetic joint-occlusion simulation (the controlled test bed)
+  recovery_baseline.py      -- naive temporal-interpolation recovery (first-pass baseline)
+  train.py                   -- trains the ST-GCN baseline on PKU-MMD
+  evaluate_occlusion.py     -- compares clean vs. occluded vs. occluded+recovered accuracy
+data/pku_mmd/raw/           -- place the downloaded PKU-MMD dataset here (gitignored, see its README)
+```
+
+## Getting Started
+
+```bash
+pip install -r requirements.txt
+
+# 1. Place the PKU-MMD dataset under data/pku_mmd/raw/ (see data/pku_mmd/raw/README.md)
+
+# 2. Train the ST-GCN baseline
+python -m src.train --raw-dir data/pku_mmd/raw --epochs 30
+
+# 3. Measure accuracy under synthetic occlusion, with and without recovery
+python -m src.evaluate_occlusion --raw-dir data/pku_mmd/raw --checkpoint checkpoints/st_gcn_baseline.pt
+```
+
+The compute-selective recovery module (the actual research contribution) is the next step, built on top of this working baseline — see the research roadmap below.
+
+## Roadmap
+
+- [x] ST-GCN baseline implementation (25-joint graph, spatial configuration partitioning, edge-importance weighting)
+- [x] PKU-MMD dataset loader
+- [x] Synthetic occlusion simulation + naive temporal-interpolation recovery baseline
+- [ ] Train baseline on real PKU-MMD data, confirm end-to-end accuracy
+- [ ] Design and implement compute-selective recovery (detect missing joints, recover only those)
+- [ ] Compare accuracy + compute cost: STSc-GCN-style dense recovery vs. selective recovery
+- [ ] Scale test to multiple simultaneous people
+- [ ] Validate on edge hardware (Jetson Nano, Raspberry Pi 5)
+
 ## Status
 
-🚧 Research and design stage — implementation in progress.
+🚧 Baseline implementation complete (untrained — pending PKU-MMD data access). Compute-selective recovery module in design.

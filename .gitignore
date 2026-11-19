@@ -1,0 +1,23 @@
+# Data (too large for git, and PKU-MMD is academic-access only)
+data/pku_mmd/raw/*
+!data/pku_mmd/raw/README.md
+data/**/*.skeleton
+data/**/*.7z
+
+# Model checkpoints / logs
+checkpoints/
+*.pt
+*.pth
+runs/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.vscode/
